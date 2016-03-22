@@ -34,12 +34,15 @@ app.controller('reservationCtrl', function($scope, $filter, ReservationService) 
     if ($scope.newReservation.date == undefined || $scope.newReservation.name == undefined || $scope.newReservation.size == undefined) {
       return;
     }
+    console.log('added');
     ReservationService.create($scope.newReservation)
       .then(function(res) {
         var reservation = res.data;
         reservation.arrived = false;
-        $scope.reservations.push(reservation);
+        resToday(reservation);
+        //$scope.reservations.push(reservation);
         $scope.newReservation = {};
+        console.log('added stuff');
       }, function(err) {
         console.error('err: ', err);
       });
