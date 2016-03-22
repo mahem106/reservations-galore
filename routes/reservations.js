@@ -10,12 +10,12 @@ router.get('/', function(req, res, next) {
   Reservation.find({}, function(err, reservations) {
     console.log('err: ', err);
     console.log('reservations: ', reservations);
-  res.send(reservations);
+    res.send(reservations);
   })
 });
 
 router.post('/', function(req, res, next) {
-  var reservation = new Reservation (req.body);
+  var reservation = new Reservation(req.body);
   reservation.save(function(err, savedReservation) {
     if (err) {
       console.log(err);
@@ -26,7 +26,7 @@ router.post('/', function(req, res, next) {
   });
 })
 
-router.put('/:id', function functionName(req, res) {
+router.put('/:id', function(req, res) {
   Reservation.findById(req.params.id, function(err, reservation) {
 
     reservation.time = req.body.time;
@@ -44,6 +44,18 @@ router.put('/:id', function functionName(req, res) {
       res.send(savedReservation);
     })
   })
+})
+
+router.delete('/:id', function(req, res) {
+  Reservation.findById(req.params.id, function(err, reservation) {
+    reservation.remove({_id: req.params.id}, function(err, result) {
+      if (err) {
+        res.send('Error: ', err);
+      } else {
+        res.send('Success');
+      }
+    })
+  });
 })
 
 module.exports = router;
