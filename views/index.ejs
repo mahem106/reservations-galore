@@ -1,11 +1,142 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
-</html>
+
+<head>
+  <title>
+    <%= title %>
+  </title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="/dist/sweetalert.css">
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.min.js"></script>
+  <script src="dist/sweetalert.min.js"></script>
+  <script src="/javascripts/module.js"></script>
+  <script src="/javascripts/controllers.js"></script>
+  <script src="/javascripts/services.js"></script>
+</head>
+<body ng-app='reservationApp' ng-controller='reservationCtrl'>
+  <h1 class="container">Reservations Galore</h1>
+  <div class="container">
+    <table>
+      <thead>
+        <th>
+          <h5>ADD NEW RESERVATION:</h5>
+        </th>
+      </thead>
+      <tbody>
+        <tr>
+          <td width="5%"><input ng-model='newReservation.time' type="date" placeholder="Time"></td>
+          <td width="95%"><input ng-model='newReservation.name' type="text" placeholder="Name"></td>
+        </tr>
+        <tr>
+          <td><input ng-model='newReservation.size' type="number" placeholder="Party Size"></td>
+          <td class="col s5"><input ng-model='newReservation.notes' type="text" placeholder="Notes"></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td class="right-align">
+            <button class="waves-effect waves-light btn" ng-click='addReservation()'>Add Reservation</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="divider"></div>
+  <div class="divider"></div>
+  <div class="container">
+    <table>
+      <thead>
+        <th>
+          <h5>Sort by:</h5>
+        </th>
+        <th>
+          <button class="waves-effect waves-light btn" ng-click="order('name')">Name</button>
+          <span class="sortorder" ng-show="predicate === 'name'" ng-class="{reverse:reverse}"></th>
+          <th>
+            <button class="waves-effect waves-light btn" ng-click="order('qty')">Party Size</button>
+            <span class="sortorder" ng-show="predicate === 'size'" ng-class="{reverse:reverse}"></th>
+            <th>
+              <button class="waves-effect waves-light btn" ng-click="order('time')">Time</button>
+              <span class="sortorder" ng-show="predicate === 'time'" ng-class="{reverse:reverse}"></th>
+              <th><input type="text" ng-model="searchText" placeholder="Search"></th>
+            </thead>
+          </table>
+          <ul class="collapsible" data-collapsible="accordion" watch>
+            <li class="hoverable" ng-repeat="reservation in reservations | filter:searchText | orderBy:predicate:reverse track by reservation._id">
+              <div class="collapsible-header">
+                <h5>
+                  <div class="left-align">{{reservation.name}}</div>
+                  <div class="center-align">Party Size: {{reservation.size}}</div>
+                  <div class="right-align">{{reservation.time}}</div>
+                </h5>
+              </div>
+              <div class="collapsible-body">
+                <table>
+                  <thead>
+                    <th><h5>Notes:</h5></th>
+                    <th><h5>Arrived?</h5></th>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="col s3 flow-text">
+                        {{reservation.notes}}
+                      </td>
+                      <td><input type="checkbox" ng-model="reservation.arrived" /></td>
+                    </tr>
+                    <tr>
+                      <td class="col s3">
+                        <button ng-click="editReservation(reservation)" class="waves-effect waves-light btn">
+                          <i class="material-icons center">edit</i>
+                        </button>
+                        <button ng-click="removeReservation(reservation)" class="waves-effect waves-light btn">
+                          <i class="material-icons center">delete</i>
+                        </button>
+                      </td>
+                    </tr>
+
+                  </tbody>
+                </table>
+                <div ng-show="reservationToEdit">
+                  <div class="container">
+                    <h5>Edit Reservation:</h5>
+                    <tbody>
+                      <tr>
+                        <td width="5%"><input ng-model='reservationToEdit.time' type="date" placeholder="Time"></td>
+                        <td width="95%"><input ng-model='reservationToEdit.name' type="text" placeholder="Name"></td>
+                      </tr>
+                      <tr>
+                        <td><input ng-model='reservationToEdit.size' type="number" placeholder="Party Size"></td>
+                        <td class="col s5"><input ng-model='reservationToEdit.notes' type="text" placeholder="Notes"></td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td class="left-align">
+                          <button ng-click="cancel()" class="modal-trigger3 waves-effect waves-light btn">
+                            <i class="material-icons center">cancel</i>
+                          </button>
+                        </td>
+                        <td class="right-align">
+                          <button ng-click="saveEdit()" class="modal-trigger3 waves-effect waves-light btn right">
+                            <i class="material-icons center">check</i>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  </div>
+                  <div class="divider"></div>
+                  <div class="divider"></div>
+                  <div class="divider"></div>
+                  <div class="divider"></div>
+                  <div class="divider"></div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </body>
+    </html>
