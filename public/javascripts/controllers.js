@@ -20,7 +20,8 @@ app.controller('reservationCtrl', function($scope, $filter, ReservationService) 
     var d1 = $scope.today;
     for(var i = 0; i < res.length; i++){
       var d2 = new Date(res[i].date);
-      if(d2.getDate() - d1.getDate() === 0){
+      var hourDiff = (d2.getTime() - d1.getTime())/(1000*60*60);
+      if(d2.getDate() - d1.getDate() <= 0 && !res[i].arrived && hourDiff >= -1){
         today.push(res[i])
       }
     }
@@ -34,6 +35,7 @@ app.controller('reservationCtrl', function($scope, $filter, ReservationService) 
     ReservationService.create($scope.newReservation)
       .then(function(res) {
         var reservation = res.data;
+        reservation.arrived = false;
         $scope.reservations.push(reservation);
         $scope.newReservation = {};
       }, function(err) {
@@ -41,7 +43,7 @@ app.controller('reservationCtrl', function($scope, $filter, ReservationService) 
       });
   }
 
-  $scope.predicate = 'time';
+  $scope.predicate = 'date';
   $scope.reverse = false;
   $scope.order = function(predicate) {
     $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;

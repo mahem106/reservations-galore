@@ -15,8 +15,8 @@
           <button class="waves-effect waves-light btn" ng-click="order('qty')">Party Size</button>
           <span class="sortorder" ng-show="predicate === 'size'" ng-class="{reverse:reverse}"></th>
           <th>
-            <button class="waves-effect waves-light btn" ng-click="order('time')">Time</button>
-            <span class="sortorder" ng-show="predicate === 'time'" ng-class="{reverse:reverse}"></th>
+            <button class="waves-effect waves-light btn" ng-click="order('date')">Date</button>
+            <span class="sortorder" ng-show="predicate === 'date'" ng-class="{reverse:reverse}"></th>
             <th><input type="text" ng-model="searchText" placeholder="Search"></th>
           </thead>
         </table>
@@ -26,7 +26,7 @@
               <h5>
                 <div class="left-align">{{reservation.name}}</div>
                 <div class="center-align">Party Size: {{reservation.size}}</div>
-                <div class="right-align">{{reservation.date | date:'HH:mm'}}</div>
+                <div class="right-align">{{reservation.date | date:'M-d, HH:mm'}}</div>
               </h5>
             </div>
             <div class="collapsible-body">
