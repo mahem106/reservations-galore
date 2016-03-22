@@ -1,6 +1,6 @@
 'use strict';
 
-const mongoUrl = 'mongodb://admin:adminlogin106@ds021689.mlab.com:21689/heroku_1n0kqwsv'
+const mongoUrl = process.env.MONGOLAB_URI
 
 var express = require('express');
 var path = require('path');

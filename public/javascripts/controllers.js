@@ -11,6 +11,7 @@ app.controller('reservationCtrl', function($scope, $filter, ReservationService) 
       var reservations = res.data;
       $scope.reservations = reservations;
       resToday(reservations);
+      //setInterval(resToday($scope.reservations), 1800000);
     }, function(err) {
       console.error('err: ', err);
     });
@@ -20,8 +21,9 @@ app.controller('reservationCtrl', function($scope, $filter, ReservationService) 
     var d1 = $scope.today;
     for (var i = 0; i < res.length; i++) {
       var d2 = new Date(res[i].date);
-      var hourDiff = (d2.getTime() - d1.getTime()) / (1000 * 60 * 60);
-      if (d2.getDate() - d1.getDate() <= 0 && !res[i].arrived && hourDiff >= -1) {
+      var dayDiff = d2.getDate() - d1.getDate();
+      var hourDiff = (d1.getTime() - d2.getTime()) / (1000 * 60 * 60);
+      if (dayDiff <= 0 && !res[i].arrived && hourDiff <= 1) {
         today.push(res[i])
       }
     }
@@ -77,13 +79,12 @@ app.controller('reservationCtrl', function($scope, $filter, ReservationService) 
   var reservationIndex;
 
   $scope.check = function(reservation) {
-    console.log(reservation);
     ReservationService.update(reservation)
+    resToday($scope.reservations)
   }
 
   $scope.editReservation = function(reservation) {
     $scope.reservationToEdit = angular.copy(reservation);
-    console.log($scope.reservationToEdit.time);
     reservationIndex = $scope.reservations.indexOf(reservation);
   }
   $scope.saveEdit = function() {
@@ -99,7 +100,9 @@ app.controller('reservationCtrl', function($scope, $filter, ReservationService) 
       $scope.reservationToEdit = null;
       ReservationService.update(editReservation)
         .then(function(res) {
-          $scope.reservations.splice(reservationIndex, 1, res.data);
+          resToday($scope.reservations)
+          // console.log(editReservation);
+          // $scope.reservations.splice(reservationIndex, 1, editReservation);
           reservationIndex = '';
         })
       swal("Edited successfully!", "", "success");
