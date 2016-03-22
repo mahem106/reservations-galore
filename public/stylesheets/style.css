@@ -1,11 +1,6 @@
-/* body {
-  background-color: rgba(121, 60, 9, 0.34);
-} */
-
 body {
-  background-image: linear-gradient(
-      rgba(182, 0, 0, 0.40), rgba(0, 65, 255, 0.40), rgba(182, 0, 0, 0.40)
-    );
+  background-image: url(https://images.unsplash.com/photo-1445364502257-00c4ddb9b18d?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&s=7a7af0c7c88078e47b6c6b532311a3a5);
+  background-size: cover;
 }
 ul {
   background-color: white;
