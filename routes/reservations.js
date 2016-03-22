@@ -26,4 +26,24 @@ router.post('/', function(req, res, next) {
   });
 })
 
+router.put('/:id', function functionName(req, res) {
+  Reservation.findById(req.params.id, function(err, reservation) {
+
+    reservation.time = req.body.time;
+    reservation.name = req.body.name;
+    reservation.size = req.body.size;
+    reservation.notes = req.body.notes;
+    reservation.arrived = req.body.arrived;
+
+    reservation.save(function(err, savedReservation) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log('saved: ', savedReservation);
+      }
+      res.send(savedReservation);
+    })
+  })
+})
+
 module.exports = router;
