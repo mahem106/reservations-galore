@@ -4,23 +4,37 @@ var app = angular.module('reservationApp');
 
 app.controller('reservationCtrl', function($scope, $filter, ReservationService) {
 
+  $scope.today = new Date();
+
   ReservationService.fetch()
     .then(function(res) {
-      console.log(res.data);
       var reservations = res.data;
       $scope.reservations = reservations;
+      resToday(reservations);
     }, function(err) {
       console.error('err: ', err);
     });
 
+  function resToday(res) {
+    var today = [];
+    var d1 = $scope.today;
+    for(var i = 0; i < res.length; i++){
+      var d2 = new Date(res[i].date);
+      if(d2.getDate() - d1.getDate() === 0){
+        today.push(res[i])
+      }
+    }
+    $scope.todaysReservations = today;
+  }
+
   $scope.addReservation = function() {
-    if($scope.newReservation.time == undefined || $scope.newReservation.name == undefined || $scope.newReservation.size == undefined){
+    if($scope.newReservation.date == undefined || $scope.newReservation.name == undefined || $scope.newReservation.size == undefined){
       return;
     }
     ReservationService.create($scope.newReservation)
       .then(function(res) {
-        var reservations = res.data;
-        $scope.reservations.push(reservations);
+        var reservation = res.data;
+        $scope.reservations.push(reservation);
         $scope.newReservation = {};
       }, function(err) {
         console.error('err: ', err);
@@ -59,14 +73,20 @@ app.controller('reservationCtrl', function($scope, $filter, ReservationService) 
     $scope.reservationToEdit = null;
   }
   var reservationIndex;
+
+  $scope.check = function(reservation) {
+    console.log(reservation);
+    ReservationService.update(reservation)
+  }
+
   $scope.editReservation = function(reservation) {
     $scope.reservationToEdit = angular.copy(reservation);
+    console.log($scope.reservationToEdit.time);
     reservationIndex = $scope.reservations.indexOf(reservation);
   }
   $scope.saveEdit = function() {
     swal({
       title: "Are you sure you want to make these edits?",
-      text: `Type: ${$scope.reservationToEdit.type}, Qty: ${$scope.reservationToEdit.qty}, Notes: ${$scope.reservationToEdit.notes}`,
       type: "warning",
       showCancelButton: true,
       confirmButtonColor: "#6cdd55",

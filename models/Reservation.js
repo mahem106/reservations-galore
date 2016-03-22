@@ -4,7 +4,7 @@ var express = require('express');
 var mongoose = require('mongoose');
 
 var reservationSchema = mongoose.Schema({
-  time: Date,
+  date: Date,
   name: String,
   size: Number,
   notes: String,

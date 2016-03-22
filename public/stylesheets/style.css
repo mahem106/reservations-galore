@@ -19,3 +19,8 @@ input {
     left: 50px;
     visibility: visible;
 }
+
+nav a {
+    color: #fff;
+    background-color: #EE6E73;
+}
