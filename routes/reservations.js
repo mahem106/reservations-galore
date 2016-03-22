@@ -27,14 +27,7 @@ router.post('/', function(req, res, next) {
 })
 
 router.put('/:id', function(req, res) {
-  Reservation.findById(req.params.id, function(err, reservation) {
-
-    reservation.time = req.body.time;
-    reservation.name = req.body.name;
-    reservation.size = req.body.size;
-    reservation.notes = req.body.notes;
-    reservation.arrived = req.body.arrived;
-
+  Reservation.findByIdAndUpdate(req.params.id, req.body, function(err, reservation) {
     reservation.save(function(err, savedReservation) {
       if (err) {
         console.log(err);
@@ -47,14 +40,12 @@ router.put('/:id', function(req, res) {
 })
 
 router.delete('/:id', function(req, res) {
-  Reservation.findById(req.params.id, function(err, reservation) {
-    reservation.remove({_id: req.params.id}, function(err, result) {
+  Reservation.findByIdAndRemove(req.params.id, function(err, reservation) {
       if (err) {
         res.send('Error: ', err);
       } else {
         res.send('Success');
       }
-    })
   });
 })
 
