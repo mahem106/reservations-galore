@@ -87,6 +87,7 @@ app.controller('reservationCtrl', function($scope, $filter, ReservationService) 
   }
 
   $scope.editReservation = function(reservation) {
+    reservation.date = new Date(reservation.date)
     $scope.reservationToEdit = angular.copy(reservation);
     reservationIndex = $scope.reservations.indexOf(reservation);
   }
