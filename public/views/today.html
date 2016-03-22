@@ -12,11 +12,11 @@
         <button class="waves-effect waves-light btn" ng-click="order('name')">Name</button>
         <span class="sortorder" ng-show="predicate === 'name'" ng-class="{reverse:reverse}"></th>
         <th>
-          <button class="waves-effect waves-light btn" ng-click="order('qty')">Party Size</button>
+          <button class="waves-effect waves-light btn" ng-click="order('size')">Party Size</button>
           <span class="sortorder" ng-show="predicate === 'size'" ng-class="{reverse:reverse}"></th>
           <th>
-            <button class="waves-effect waves-light btn" ng-click="order('time')">Time</button>
-            <span class="sortorder" ng-show="predicate === 'time'" ng-class="{reverse:reverse}"></th>
+            <button class="waves-effect waves-light btn" ng-click="order('date')">Time</button>
+            <span class="sortorder" ng-show="predicate === 'date'" ng-class="{reverse:reverse}"></th>
             <th><input type="text" ng-model="searchText" placeholder="Search"></th>
           </thead>
         </table>
