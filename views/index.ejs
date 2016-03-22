@@ -18,38 +18,50 @@
   <script src="/javascripts/controllers.js"></script>
   <script src="/javascripts/services.js"></script>
   <script>
-		$(document).ready(function() {
-			$(".button-collapse").sideNav();
-		});</script>
+    $(document).ready(function() {
+      $(".button-collapse").sideNav();
+    });
+  </script>
 </head>
+
 <body ng-app='reservationApp' ng-controller='reservationCtrl'>
   <nav>
-		<div class="nav-wrapper">
-			<a ui-sref="home" class="brand-logo">Reservations Galore</a>
-			<ul class="right">
-				<li><a ui-sref='all'>All Reservations</a></li>
-			</ul class="left">
+    <div class="nav-wrapper">
+      <a ui-sref="home" class="brand-logo">Reservations Galore</a>
+      <ul class="right">
+        <li><a ui-sref='all'>All Reservations</a></li>
+      </ul class="left">
       <ul>
         <li><a ui-sref='home'>Today's Reservations</a></li>
       </ul>
-		</div>
+    </div>
   </nav>
   <div class="container">
     <table>
       <thead>
-        <th><button class="waves-effect waves-light btn" ng-click='addReservation()'>ADD</button></th>
+        <th>
+          <button class="waves-effect waves-light btn" ng-click='addReservation()'>ADD</button>
+        </th>
         <th>
           <h5>ADD NEW RESERVATION:</h5>
         </th>
       </thead>
       <tbody>
         <tr>
-          <td width="5%"><input ng-model='newReservation.date' type="datetime-local" value="{{today}}" /></td>
-          <td width="90%"><input ng-model='newReservation.name' type="text" placeholder="Name"></td>
+          <td width="5%">
+            <input ng-model='newReservation.date' type="datetime-local" value="{{today}}" />
+          </td>
+          <td width="90%">
+            <input ng-model='newReservation.name' type="text" placeholder="Name">
+          </td>
         </tr>
         <tr>
-          <td><input ng-model='newReservation.size' type="number" placeholder="Party Size"></td>
-          <td class="col s5"><input ng-model='newReservation.notes' type="text" placeholder="Notes"></td>
+          <td>
+            <input ng-model='newReservation.size' type="number" placeholder="Party Size">
+          </td>
+          <td class="col s5">
+            <input ng-model='newReservation.notes' type="text" placeholder="Notes">
+          </td>
         </tr>
       </tbody>
     </table>
@@ -57,5 +69,6 @@
   <div class="divider"></div>
   <div class="divider"></div>
   <ui-view></ui-view>
-      </body>
-    </html>
+</body>
+
+</html>

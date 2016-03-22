@@ -18,10 +18,10 @@ app.controller('reservationCtrl', function($scope, $filter, ReservationService) 
   function resToday(res) {
     var today = [];
     var d1 = $scope.today;
-    for(var i = 0; i < res.length; i++){
+    for (var i = 0; i < res.length; i++) {
       var d2 = new Date(res[i].date);
-      var hourDiff = (d2.getTime() - d1.getTime())/(1000*60*60);
-      if(d2.getDate() - d1.getDate() <= 0 && !res[i].arrived && hourDiff >= -1){
+      var hourDiff = (d2.getTime() - d1.getTime()) / (1000 * 60 * 60);
+      if (d2.getDate() - d1.getDate() <= 0 && !res[i].arrived && hourDiff >= -1) {
         today.push(res[i])
       }
     }
@@ -29,7 +29,7 @@ app.controller('reservationCtrl', function($scope, $filter, ReservationService) 
   }
 
   $scope.addReservation = function() {
-    if($scope.newReservation.date == undefined || $scope.newReservation.name == undefined || $scope.newReservation.size == undefined){
+    if ($scope.newReservation.date == undefined || $scope.newReservation.name == undefined || $scope.newReservation.size == undefined) {
       return;
     }
     ReservationService.create($scope.newReservation)

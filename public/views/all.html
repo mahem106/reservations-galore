@@ -25,15 +25,20 @@
             <div class="collapsible-header">
               <h5>
                 <div class="left-align">{{reservation.name}}</div>
-                <div class="center-align">Party Size: {{reservation.size}}</div>
+                <div class="center-align">Party Size:
+                  {{reservation.size}}</div>
                 <div class="right-align">{{reservation.date | date:'M-d, HH:mm'}}</div>
               </h5>
             </div>
             <div class="collapsible-body">
               <table>
                 <thead>
-                  <th><h5>Notes:</h5></th>
-                  <th><h5>Arrived?</h5></th>
+                  <th>
+                    <h5>Notes:</h5>
+                  </th>
+                  <th>
+                    <h5>Arrived?</h5>
+                  </th>
                 </thead>
                 <tbody>
                   <tr>
@@ -82,14 +87,14 @@
                     </tr>
                   </tbody>
                 </table>
-                </div>
-                <div class="divider"></div>
-                <div class="divider"></div>
-                <div class="divider"></div>
-                <div class="divider"></div>
-                <div class="divider"></div>
               </div>
+              <div class="divider"></div>
+              <div class="divider"></div>
+              <div class="divider"></div>
+              <div class="divider"></div>
+              <div class="divider"></div>
             </div>
-          </li>
-        </ul>
-      </div>
+          </div>
+        </li>
+      </ul>
+    </div>
